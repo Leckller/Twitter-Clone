@@ -4,7 +4,11 @@ import UserModel from "../database/models/User.model";
 
 const extractToken = (token: string) => token.split(' ')[1];
 
-const tokenMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+type Envs = {
+  envs: { id: number, email: string }
+}
+
+const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFunction) => {
   const { auth } = req.headers;
 
   if (!auth) {
@@ -15,11 +19,11 @@ const tokenMiddleware = async (req: Request, res: Response, next: NextFunction) 
 
   try {
     const decoded = await util.jwt.verify(token);
-    const user = await UserModel.findOne({ where: { email: decoded.email } });
+    const user = await UserModel.findOne({ where: { email: decoded.email, id: decoded.id } });
     if (!user) {
       return res.status(401).json({ message: 'Token inválido' });
     }
-
+    req.envs = decoded;
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Token Inválido' });

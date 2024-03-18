@@ -9,14 +9,13 @@ type ServiceResponse<Data> = {
   data: Data
 }
 
-const validateUserFields = async (body: UserWithNoId): Promise<ServiceResponse<ServiceResponseError> | false> => {
+const validateUserFields = async (body: Omit<UserWithNoId, 'pictureUrl'>): Promise<ServiceResponse<ServiceResponseError> | false> => {
   const { email, endereco, name, password } = body;
   if (!endereco || !email || !name || !password) {
     return {
       status: 400, data: {
         message:
-          `Preencha os campos ${email ? "" : 'email'} ${endereco ? "" : ', endereco'}
-          ${name ? "" : ', name'} ${password ? "" : ', password'}`
+          `Preencha os campos ${email ? "" : 'email'}${endereco ? "" : ', endereco'}${name ? "" : ', name'}${password ? "" : ', password'}`
       }
     };
   }
