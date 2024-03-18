@@ -1,23 +1,10 @@
-{
-  "development": {
-    "username": "root",
-      "password": null,
-        "database": "database_development",
-          "host": "127.0.0.1",
-            "dialect": "mysql"
-  },
-  "test": {
-    "username": "root",
-      "password": null,
-        "database": "database_test",
-          "host": "127.0.0.1",
-            "dialect": "mysql"
-  },
-  "production": {
-    "username": "root",
-      "password": null,
-        "database": "database_production",
-          "host": "127.0.0.1",
-            "dialect": "mysql"
-  }
-}
+"use strict";
+var config = {
+    database: process.env.ENV_DATABASE || 'localDB',
+    password: process.env.ENV_PASSWORD || 'password',
+    host: process.env.ENV_HOST || 'localhost',
+    username: process.env.ENV_USER || 'random',
+    port: Number(process.env.ENV_PORT) || 3101,
+    dialect: 'mysql'
+};
+module.exports = config;
