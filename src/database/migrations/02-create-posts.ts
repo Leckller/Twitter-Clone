@@ -7,9 +7,8 @@ export default {
       id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
       userId: { type: DataTypes.INTEGER, allowNull: false, field: 'user_id', references: { model: 'users', key: 'id' } },
       likes: { type: DataTypes.INTEGER, allowNull: false },
-      posted: { type: DataTypes.STRING, allowNull: false },
+      posted: { type: DataTypes.DATE, allowNull: false },
       content: { type: DataTypes.STRING, allowNull: false },
-      updated: { type: DataTypes.DATE, allowNull: false },
     }, {});
   },
   down(queryInterface: QueryInterface) {
