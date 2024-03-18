@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compiler": "npm -y tsc"
+    "compiler": "npm -y tsc",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",

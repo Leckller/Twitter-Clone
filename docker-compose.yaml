@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  backend:
+    image: node:16-alpine
+    working_dir: /app
+    user: node
+    restart: always
+    volumes:
+      - ./:/app/
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+    environment:
+      - DB_HOST:db
+      - DB_PASSWORD:password
+      - DB_NAME:ruytter
+      - DB_PORT:3306
+      - DB_USER:root
+    command: npm start
+  db:
+    image: mysql:8.0.32
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=ruytter
