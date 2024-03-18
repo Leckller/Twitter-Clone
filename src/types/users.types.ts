@@ -4,5 +4,5 @@ export type User = {
   endereco: string,
   email: string,
   password: string,
-  pictureUrl: Buffer,
+  pictureUrl: string,
 }
