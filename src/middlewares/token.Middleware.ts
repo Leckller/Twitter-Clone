@@ -4,8 +4,8 @@ import UserModel from "../database/models/User.model";
 
 const extractToken = (token: string) => token.split(' ')[1];
 
-type Envs = {
-  envs: { id: number, email: string }
+export type Envs = {
+  envs: { id: number, email: string, endereco: string, name: string, pictureUrl: string }
 }
 
 const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFunction) => {
@@ -23,7 +23,9 @@ const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFun
     if (!user) {
       return res.status(401).json({ message: 'Token inválido' });
     }
-    req.envs = decoded;
+    const { email, endereco, name, id, pictureUrl } = user.dataValues;
+
+    req.envs = { email, endereco, name, id, pictureUrl };
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Token Inválido' });

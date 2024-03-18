@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import services from "../services";
 import UserModel from "../database/models/User.model";
 import utils from '../utils';
+import { Envs } from "../middlewares/token.Middleware";
 
 const createUser = async (req: Request, res: Response) => {
   const { email, endereco, name, password, pictureUrl } = req.body;
@@ -27,8 +28,10 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 
-const getUser = async (req: Request, res: Response) => {
+const getUser = async (req: Request & Envs, res: Response) => {
+  const user = req.envs;
 
+  res.status(200).json(user);
 };
 
 export default { createUser, getUser };
