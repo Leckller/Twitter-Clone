@@ -17,4 +17,6 @@ const UserModel: UserSequelizeModelCreate = db.define('user', {
   tableName: 'users',
   timestamps: false,
   underscored: true
-})
+});
+
+export default UserModel;

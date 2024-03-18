@@ -5,9 +5,8 @@
   "main": "./build/server.js",
   "scripts": {
     "dev": "nodemon .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compiler": "npm -y tsc",
-    "start": "node ."
+    "start": "node .",
+    "compiler": "npm -y tsc"
   },
   "keywords": [],
   "author": "",

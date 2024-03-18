@@ -8,7 +8,7 @@ export default {
       endereco: { type: DataTypes.STRING, allowNull: false, unique: true },
       email: { type: DataTypes.STRING, allowNull: false, unique: true },
       password: { type: DataTypes.STRING, allowNull: false },
-      pictureUrl: { type: DataTypes.BLOB, allowNull: false },
+      pictureUrl: { type: DataTypes.BLOB, allowNull: false, defaultValue: 'default' },
       name: { type: DataTypes.STRING, allowNull: false },
     })
   },
