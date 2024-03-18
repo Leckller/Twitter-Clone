@@ -12,7 +12,7 @@ const UserModel: UserSequelizeModelCreate = db.define('user', {
   endereco: DataTypes.STRING,
   name: DataTypes.STRING,
   password: DataTypes.STRING,
-  pictureUrl: DataTypes.BLOB
+  pictureUrl: DataTypes.STRING
 }, {
   tableName: 'users',
   timestamps: false,

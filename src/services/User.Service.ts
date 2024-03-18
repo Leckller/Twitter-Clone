@@ -1,5 +1,6 @@
-import UserModel, { UserSequelizeModel, UserWithOptionalId } from "../database/models/User.Model";
+import UserModel, { UserSequelizeModel, UserWithOptionalId } from "../database/models/User.model";
 import { User } from "../types/users.types";
+import util from '../utils';
 
 type ServiceResponseError = {
   message: string
@@ -10,7 +11,7 @@ type ServiceResponse<data> = {
   data: data
 }
 
-const validateUser = async (body: Omit<User, 'id'>)
+const validateUser = async (body: Omit<Omit<User, 'pictureUrl'>, 'id'>)
   : Promise<ServiceResponse<ServiceResponseError> | false> => {
   if (!body.email) {
     const emailExists = await UserModel.findOne({ where: { email: body.email } });
@@ -19,6 +20,7 @@ const validateUser = async (body: Omit<User, 'id'>)
     }
     return { status: 400, data: { message: 'Insira um email' } }
   }
+
   if (!body.endereco) {
     const enderecoExists = await UserModel.findOne({ where: { endereco: body.endereco } });
     if (enderecoExists) {
@@ -26,12 +28,15 @@ const validateUser = async (body: Omit<User, 'id'>)
     }
     return { status: 400, data: { message: 'Insira um endereço de perfil' } }
   }
+
   if (!body.name) {
     return { status: 400, data: { message: 'Insira um nome' } }
   }
+
   if (!body.password) {
     return { status: 400, data: { message: 'Insira uma senha' } }
   }
+
   if (body.password.length < 8) {
     return { status: 400, data: { message: 'Sua senha deve ter um tamanho maior que 8 caracteres' } }
   }
@@ -43,7 +48,7 @@ const createUser = async (body: UserWithOptionalId)
 
   const { email, endereco, name, password, pictureUrl } = body;
   const create = await UserModel.create({ email, endereco, name, password, pictureUrl });
-
+  // const createToken = await util.jwt.sign({ email, id: 324423 })
   return { status: 201, data: create }
 };
 
