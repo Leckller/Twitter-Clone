@@ -3,8 +3,12 @@ import { User } from "../types/users.types";
 type BodyMocks = Record<string, Omit<Omit<User, 'id'>, 'pictureUrl'>>;
 
 const bodyMocks = {
+  invalidFields: { email: '', endereco: '', name: '', password: '' },
   invalidEmail: { email: 'emailInvalido', endereco: 'jhonsons', name: 'xesquedele', password: '123456789' },
-  invalidPassword: { email: 'tavin@gmail.com', endereco: 'ruyzada', name: 'Ruyzinho', password: '12345678' }
+  invalidPassword: { email: 'teste@gmail.com', endereco: 'ruyzada', name: 'Ruyzinho', password: 'senha' },
+  validFields: {
+    email: 'tlgd@gmail.com', endereco: 'tomale', name: 'teste', password: '121212121212', pictureUrl: 'defaultPicture'
+  }
 };
 
 export default { bodyMocks };

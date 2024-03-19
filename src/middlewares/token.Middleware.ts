@@ -9,13 +9,13 @@ export type Envs = {
 }
 
 const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFunction) => {
-  const { auth } = req.headers;
+  const { authorization } = req.headers;
 
-  if (!auth) {
+  if (!authorization) {
     return res.status(401).json({ message: 'Token é obrigatório' })
   }
 
-  const token = extractToken(`${auth}`);
+  const token = extractToken(`${authorization}`);
 
   try {
     const decoded = await util.jwt.verify(token);
