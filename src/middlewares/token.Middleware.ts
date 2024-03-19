@@ -21,8 +21,9 @@ const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFun
     const decoded = await util.jwt.verify(token);
     const user = await UserModel.findOne({ where: { email: decoded.email, id: decoded.id } });
     if (!user) {
-      return res.status(401).json({ message: 'Token inválido' });
+      return res.status(401).json({ message: 'Token Inválido' });
     }
+
     const { email, endereco, name, id, pictureUrl } = user.dataValues;
 
     req.envs = { email, endereco, name, id, pictureUrl };
