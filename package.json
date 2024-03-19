@@ -5,8 +5,10 @@
   "main": "./build/server.js",
   "scripts": {
     "dev": "nodemon .",
-    "start": "node .",
-    "compiler": "npx -y tsc"
+    "start": "npx ts-node ./src/server",
+    "compiler": "npx -y tsc",
+    "test": "mocha -r ts-node/register ./src/tests/**/*.test.ts --exit -t 60000 --exit",
+    "test:coverage": "nyc mocha -r ts-node/register ./src/**/* --exit -t 60000"
   },
   "keywords": [],
   "author": "",

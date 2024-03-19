@@ -9,6 +9,8 @@ type ServiceResponse<Data> = {
   data: Data
 }
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const validateUserFields = async (body: Omit<UserWithNoId, 'pictureUrl'>): Promise<ServiceResponse<ServiceResponseError> | false> => {
   const { email, endereco, name, password } = body;
   if (!endereco || !email || !name || !password) {
@@ -18,6 +20,9 @@ const validateUserFields = async (body: Omit<UserWithNoId, 'pictureUrl'>): Promi
           `Preencha os campos ${email ? "" : 'email'}${endereco ? "" : ', endereco'}${name ? "" : ', name'}${password ? "" : ', password'}`
       }
     };
+  }
+  if (!emailRegex.test(email)) {
+    return { status: 400, data: { message: 'Email inválido' } }
   }
 
   if (password.length < 8) {
