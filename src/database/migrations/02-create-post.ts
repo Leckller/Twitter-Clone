@@ -9,7 +9,12 @@ export default {
       posted: { type: DataTypes.DATE, allowNull: false },
       content: { type: DataTypes.TEXT, allowNull: false },
       userId: {
-        type: DataTypes.INTEGER, allowNull: false, field: 'user_id', references: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'user_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
           key: 'id', model: 'users'
         }
       },
