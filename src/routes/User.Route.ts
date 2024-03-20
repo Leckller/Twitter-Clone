@@ -4,11 +4,11 @@ import midds from '../middlewares';
 const route = express.Router();
 
 // Foi utilizado o type Aplication devido o uso do req.envs para passar informação do middleware para o proximo
-route.get('/', midds.token as Application, controllers.user.getUser as Application);
+route.get('/', midds.token as Application, controllers.User.getUser as Application);
 
-route.post('/', controllers.user.createUser);
+route.post('/', controllers.User.createUser);
 
-route.post('/login', controllers.user.loginUser);
+route.post('/login', controllers.User.loginUser);
 
 
 export default route;

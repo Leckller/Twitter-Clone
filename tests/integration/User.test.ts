@@ -2,10 +2,9 @@ import sinon from 'sinon';
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 
-import app from '../../app';
-import mocks from '../../mocks/user.mocks';
-import UserModel from '../../database/models/User.model';
-import { error } from 'console';
+import app from '../../src/app';
+import mocks from '../mocks/user.mocks';
+import UserModel from '../../src/database/models/User.model'
 
 chai.use(chaiHttp);
 

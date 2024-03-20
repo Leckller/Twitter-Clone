@@ -1,3 +1,5 @@
-import user from './User.Route';
+import User from './User.Route';
+import Comment from './Comment.Route';
+import Post from './Post.Route';
 
-export default { user }
+export default { User, Post, Comment }

@@ -6,7 +6,7 @@ import { Envs } from "../middlewares/token.Middleware";
 
 const createUser = async (req: Request, res: Response) => {
   const { email, endereco, name, password, pictureUrl } = req.body;
-  const validateFields = await services.user.validateUserFields({
+  const validateFields = await services.User.validateUserFields({
     email, endereco, name, password
   });
   if (validateFields) {
@@ -36,7 +36,7 @@ const getUser = async (req: Request & Envs, res: Response) => {
 
 const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const userExists = await services.user.validateLogin({ email, password });
+  const userExists = await services.User.validateLogin({ email, password });
 
   if ('status' in userExists) {
     return res.status(userExists.status).json({ message: userExists.data.message })
