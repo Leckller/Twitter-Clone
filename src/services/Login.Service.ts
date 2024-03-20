@@ -5,17 +5,18 @@ import { User } from "../types/users.types";
 const validateLogin = async (body: { email: string, password: string })
   : Promise<ServiceResponse<ServiceResponseError> | User> => {
   const { email, password } = body;
+
   if (!email || !password) {
     return { status: 400, data: { message: 'Preencha todos os campos' } }
   }
 
   const loginExists = await UserModel.findOne({ where: { email, password } })
 
-  if (loginExists) {
-    return loginExists.toJSON();
+  if (!loginExists || password !== loginExists.dataValues.password) {
+    return { status: 401, data: { message: 'Senha ou Email inválidos' } }
   }
 
-  return { status: 404, data: { message: 'Senha ou Email inválidos' } }
+  return loginExists.toJSON();
 }
 
-export default { validateLogin }
+export default { validateLogin };

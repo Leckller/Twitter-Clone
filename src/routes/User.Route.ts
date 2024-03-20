@@ -1,6 +1,7 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
 import controllers from '../controllers';
 import midds from '../middlewares';
+
 const route = express.Router();
 
 // Foi utilizado o type Aplication devido o uso do req.envs para passar informação do middleware para o proximo

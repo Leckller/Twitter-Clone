@@ -22,3 +22,7 @@ const PostModel: PostSequelizeModelCreate = db.define('post', {
   tableName: 'posts',
   timestamps: false
 });
+
+// PostModel.hasOne()
+
+export default PostModel;
