@@ -8,7 +8,5 @@ route.get('/', midds.token as Application, controllers.User.getUser as Applicati
 
 route.post('/', controllers.User.createUser);
 
-route.post('/login', controllers.User.loginUser);
-
 
 export default route;

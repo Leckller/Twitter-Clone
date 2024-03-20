@@ -1,14 +1,5 @@
 import UserModel, { UserWithNoId } from "../database/models/User.model";
-import { User } from "../types/users.types";
-
-type ServiceResponseError = {
-  message: string
-}
-
-type ServiceResponse<Data> = {
-  status: number,
-  data: Data
-}
+import { ServiceResponse, ServiceResponseError } from "../types/Services.types";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -43,20 +34,4 @@ const validateUserFields = async (body: Omit<UserWithNoId, 'pictureUrl'>): Promi
   return false;
 }
 
-const validateLogin = async (body: { email: string, password: string })
-  : Promise<ServiceResponse<ServiceResponseError> | User> => {
-  const { email, password } = body;
-  if (!email || !password) {
-    return { status: 400, data: { message: 'Preencha todos os campos' } }
-  }
-
-  const loginExists = await UserModel.findOne({ where: { email, password } })
-
-  if (loginExists) {
-    return loginExists.toJSON();
-  }
-
-  return { status: 404, data: { message: 'Senha ou Email inválidos' } }
-}
-
-export default { validateUserFields, validateLogin };
+export default { validateUserFields };
