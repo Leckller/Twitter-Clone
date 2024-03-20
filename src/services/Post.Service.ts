@@ -19,7 +19,6 @@ const validateNewPost = (body: { content: string })
 const enderecoExists = async (endereco: string)
   : Promise<ServiceResponse<ServiceResponseError> | false> => {
   const query = await UserModel.findOne({ where: { endereco } });
-
   if (!query) {
     return { status: 404, data: { message: 'Usuario não encontrado' } };
   }

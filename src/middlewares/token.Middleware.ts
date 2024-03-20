@@ -18,7 +18,7 @@ const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFun
   const token = extractToken(`${authorization}`);
 
   try {
-    const decoded = await util.jwt.verify(token);
+    const decoded = util.jwt.verify(token);
     const user = await UserModel.findOne({ where: { email: decoded.email, id: decoded.id } });
     if (!user) {
       return res.status(401).json({ message: 'Token Inválido' });
