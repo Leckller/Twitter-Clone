@@ -1,3 +1,6 @@
-import user from './user.service';
+import User from './User.Service';
+import Post from './Post.Service';
+import Comment from './Comment.Service';
+import Login from './Login.Service';
 
-export default { user }
+export default { User, Post, Comment, Login }

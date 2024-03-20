@@ -9,20 +9,21 @@ export type Envs = {
 }
 
 const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFunction) => {
-  const { auth } = req.headers;
+  const { authorization } = req.headers;
 
-  if (!auth) {
+  if (!authorization) {
     return res.status(401).json({ message: 'Token é obrigatório' })
   }
 
-  const token = extractToken(`${auth}`);
+  const token = extractToken(`${authorization}`);
 
   try {
     const decoded = await util.jwt.verify(token);
     const user = await UserModel.findOne({ where: { email: decoded.email, id: decoded.id } });
     if (!user) {
-      return res.status(401).json({ message: 'Token inválido' });
+      return res.status(401).json({ message: 'Token Inválido' });
     }
+
     const { email, endereco, name, id, pictureUrl } = user.dataValues;
 
     req.envs = { email, endereco, name, id, pictureUrl };

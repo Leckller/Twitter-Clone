@@ -1,13 +1,5 @@
 import UserModel, { UserWithNoId } from "../database/models/User.model";
-
-type ServiceResponseError = {
-  message: string
-}
-
-type ServiceResponse<Data> = {
-  status: number,
-  data: Data
-}
+import { ServiceResponse, ServiceResponseError } from "../types/Services.types";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -22,7 +14,7 @@ const validateUserFields = async (body: Omit<UserWithNoId, 'pictureUrl'>): Promi
     };
   }
   if (!emailRegex.test(email)) {
-    return { status: 400, data: { message: 'Email inválido' } }
+    return { status: 400, data: { message: 'Email inválido' } };
   }
 
   if (password.length < 8) {
