@@ -3,13 +3,16 @@ import { ServiceResponse, ServiceResponseError } from "../types/Services.types"
 
 const validateNewPost = (body: { content: string })
   : ServiceResponse<ServiceResponseError> | false => {
-  if (!body.content) {
-    return { status: 400, data: { message: 'Ninguém lê algo vazio!' } }
-  }
-  if (body.content.length < 1) {
-    return { status: 400, data: { message: 'Seu post deve ter pelo menos um caractere' } }
+  const { content } = body;
+
+  if (!content || content.length < 1) {
+    return { status: 411, data: { message: 'Seu post deve ter pelo menos um caractere' } }
   }
 
+  if (content.length > 256) {
+    return { status: 411, data: { message: 'Seu post atingiu o limite de 256 caracteres' } }
+
+  }
   return false
 }
 

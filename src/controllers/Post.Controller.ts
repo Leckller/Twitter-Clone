@@ -65,8 +65,10 @@ const viewGlobalPosts = async (req: Request, res: Response) => {
   res.status(200).json(globalPosts)
 }
 
-const like = async (req: Request, res: Response) => {
+// const like = async (req: Request, res: Response) => {
+//   const { id, liked } = req.body;
 
-}
+//   const update = await PostModel.update({likes}, { where: { id } })
+// }
 
 export default { newPost, viewProfilePosts, viewGlobalPosts };
