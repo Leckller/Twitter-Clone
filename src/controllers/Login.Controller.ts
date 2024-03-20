@@ -16,6 +16,7 @@ const login = async (req: Request, res: Response) => {
 
   } catch (err) {
     return res.status(500).json({ message: 'Ocorreu um erro inesperado' });
+    // continuo sem saber como disparar um erro p testar isso aqui
   }
 
 }

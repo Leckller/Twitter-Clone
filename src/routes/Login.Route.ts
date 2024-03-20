@@ -3,6 +3,6 @@ import controllers from '../controllers';
 
 const route = express.Router();
 
-route.post('/login', controllers.Login.login);
+route.post('/', controllers.Login.login);
 
 export default route;

@@ -80,7 +80,6 @@ describe('Post, /User', function () {
 
     expect(httpResponse.status).to.eq(201);
     expect(httpResponse.body).to.have.property('token');
-    console.log(httpResponse.body)
   });
 
   // como lança um erro p teste?
