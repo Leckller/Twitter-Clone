@@ -12,6 +12,7 @@ const login = async (req: Request, res: Response) => {
   try {
 
     const token = utils.jwt.sign({ email, id: userExists.id });
+
     res.status(200).json({ token });
 
   } catch (err) {
