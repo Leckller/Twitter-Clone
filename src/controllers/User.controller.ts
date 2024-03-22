@@ -14,6 +14,7 @@ const createUser = async (req: Request, res: Response) => {
   }
   else {
     try {
+      // fazer uma transaction
       const create = await UserModel.create({
         email, endereco, name,
         password, pictureUrl: pictureUrl ? pictureUrl : 'defaultPicture'
