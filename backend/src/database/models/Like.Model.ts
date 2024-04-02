@@ -1,13 +1,18 @@
 import SequelizeLike from "./Sequelize/Like.Sequelize";
 
 interface like {
-  like(userId: number, postId: number, like: boolean): void,
+  like(userId: number, postId: number): void,
+  dislike(userId: number, postId: number): void,
 }
 
 export default class Like implements like {
   private model = SequelizeLike
 
-  async like(userId: number, postId: number, like: boolean): Promise<void> {
-    await this.model.create({ post_id: postId, user_id: userId });
+  async like(userId: number, postId: number): Promise<void> {
+    await this.model.create({ postId, userId });
+  }
+
+  async dislike(userId: number, postId: number): Promise<void> {
+    await this.model.destroy({ where: { userId, postId } })
   }
 }

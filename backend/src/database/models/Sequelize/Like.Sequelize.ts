@@ -3,14 +3,14 @@ import db from '../index';
 
 class SequelizeLike extends Model<InferAttributes<SequelizeLike>, InferCreationAttributes<SequelizeLike>> {
   declare id: CreationOptional<number>;
-  declare user_id: number;
-  declare post_id: number;
+  declare userId: number;
+  declare postId: number;
 }
 
 SequelizeLike.init({
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, allowNull: false },
-  post_id: { type: DataTypes.INTEGER, allowNull: false },
-  user_id: { type: DataTypes.INTEGER, allowNull: false },
+  postId: { type: DataTypes.INTEGER, allowNull: false, field: 'post_id' },
+  userId: { type: DataTypes.INTEGER, allowNull: false, field: 'user_id' },
 }, {
   sequelize: db,
   underscored: true,
