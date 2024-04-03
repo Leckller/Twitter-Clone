@@ -16,7 +16,7 @@ SequelizePost.init({
   postId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, field: 'post_id' },
   userId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, field: 'user_id' },
   posted: { type: DataTypes.INTEGER, allowNull: false, defaultValue: new Date() },
-  repost: { type: DataTypes.INTEGER, allowNull: false, defaultValue: false },
+  repost: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
 }, {
   sequelize: db,
   tableName: 'posts',

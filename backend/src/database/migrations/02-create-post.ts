@@ -5,9 +5,9 @@ export default {
   up(queryInterface: QueryInterface) {
     return queryInterface.createTable<Model<Post>>('posts', {
       id: { type: DataTypes.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
-      likes: { type: DataTypes.INTEGER, allowNull: false },
       posted: { type: DataTypes.DATE, allowNull: false },
-      content: { type: DataTypes.TEXT, allowNull: false },
+      content: { type: DataTypes.STRING(340), allowNull: false },
+      repost: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,

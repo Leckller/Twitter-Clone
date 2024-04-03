@@ -1,8 +1,9 @@
 export type User = {
   id: number,
-  name: string,
-  endereco: string,
-  email: string,
+  customName: string,
+  tagName: string,
+  picture: string,
   password: string,
-  pictureUrl: string,
+  email: string,
+  description: string,
 }
