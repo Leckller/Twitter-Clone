@@ -1,10 +1,11 @@
+import { Route, Routes } from "react-router-dom"
+import { Checkin } from "./routes"
+
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Checkin />} />
+    </Routes>
   )
 }
 
