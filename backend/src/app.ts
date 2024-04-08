@@ -1,16 +1,18 @@
 import express, { Application } from "express";
-import routes from './routes';
-import middlewares from "./middlewares";
+import router from "./routes";
 
-const app = express();
+export default class App {
+  public app = express()
 
-app.use(express.json());
+  constructor() {
+    this.app.use(express.json());
 
-app.use('/user', routes.User);
-app.use('/login', routes.Login);
+    // index router
+    this.app.use(router);
+  }
 
-app.use(middlewares.token as Application);
+}
 
-app.use('/post', routes.Post);
+const { app } = new App();
 
-export default app;
+export { app };
