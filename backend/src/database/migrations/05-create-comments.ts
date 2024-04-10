@@ -1,12 +1,22 @@
 import { DataTypes, Model, QueryInterface } from "sequelize"
-import { Post } from "../../types/posts.types";
+import { Comment } from "../../types/comment.types";
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<Post>>('posts', {
+    return queryInterface.createTable<Model<Comment>>('comments', {
       id: { type: DataTypes.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
-      posted: { type: DataTypes.DATE, allowNull: false, defaultValue: new Date() },
+      commented: { type: DataTypes.DATE, allowNull: false, defaultValue: new Date() },
       content: { type: DataTypes.STRING(340), allowNull: false },
+      postId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'post_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          key: 'id', model: 'posts'
+        }
+      },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -20,6 +30,6 @@ export default {
     })
   },
   down(queryInterface: QueryInterface) {
-    return queryInterface.dropTable('posts');
+    return queryInterface.dropTable('comments');
   },
 }

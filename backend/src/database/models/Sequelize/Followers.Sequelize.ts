@@ -3,32 +3,26 @@ import db from '../index';
 
 class SequelizeLike extends Model<InferAttributes<SequelizeLike>, InferCreationAttributes<SequelizeLike>> {
   declare id: CreationOptional<number>;
-  declare userId: number;
-  declare postId: number;
-  declare typePost: boolean
-  declare liked: Date
+  declare followedId: number;
+  declare followingId: number;
 }
-
-// Onde typePost === false -> postId vai ser de um comentario
 
 SequelizeLike.init({
   id: { type: DataTypes.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
-  liked: { type: DataTypes.DATE, allowNull: false, defaultValue: new Date() },
-  typePost: { type: DataTypes.BOOLEAN, allowNull: false, field: 'type_post' },
-  postId: {
+  followedId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    field: 'post_id',
+    field: 'followed_id',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     references: {
-      key: 'id', model: 'posts'
+      key: 'id', model: 'users'
     }
   },
-  userId: {
+  followingId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    field: 'user_id',
+    field: 'following_id',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     references: {
@@ -38,7 +32,7 @@ SequelizeLike.init({
 }, {
   sequelize: db,
   underscored: true,
-  tableName: 'likes',
+  tableName: 'followers',
   timestamps: false
 });
 

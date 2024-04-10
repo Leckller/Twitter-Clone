@@ -1,6 +1,7 @@
-export type like = {
+export type Like = {
   id: number,
   userId: number,
   postId: number,
-  isPost: boolean
+  typePost: boolean
+  liked: Date
 }

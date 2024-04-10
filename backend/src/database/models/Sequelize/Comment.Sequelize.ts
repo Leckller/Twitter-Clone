@@ -5,16 +5,14 @@ class SequelizeLike extends Model<InferAttributes<SequelizeLike>, InferCreationA
   declare id: CreationOptional<number>;
   declare userId: number;
   declare postId: number;
-  declare typePost: boolean
-  declare liked: Date
+  declare content: string
+  declare commented: Date
 }
 
-// Onde typePost === false -> postId vai ser de um comentario
-
 SequelizeLike.init({
-  id: { type: DataTypes.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
-  liked: { type: DataTypes.DATE, allowNull: false, defaultValue: new Date() },
-  typePost: { type: DataTypes.BOOLEAN, allowNull: false, field: 'type_post' },
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, allowNull: false },
+  content: { type: DataTypes.STRING(340), allowNull: false, field: 'content' },
+  commented: { type: DataTypes.DATE, allowNull: false, defaultValue: new Date(), field: 'commented' },
   postId: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -38,7 +36,7 @@ SequelizeLike.init({
 }, {
   sequelize: db,
   underscored: true,
-  tableName: 'likes',
+  tableName: 'comments',
   timestamps: false
 });
 

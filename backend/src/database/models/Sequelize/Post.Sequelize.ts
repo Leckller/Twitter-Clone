@@ -1,27 +1,39 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import db from '../index';
+import SequelizeUser from "./User.Sequelize";
 
 class SequelizePost extends Model<InferAttributes<SequelizePost>, InferCreationAttributes<SequelizePost>> {
   declare id: CreationOptional<number>;
   declare userId: number;
-  declare postId: number;
   declare content: string;
   declare posted: Date;
-  declare repost: boolean;
 }
 
 SequelizePost.init({
   id: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true },
   content: { type: DataTypes.STRING, allowNull: false },
-  postId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, field: 'post_id' },
-  userId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, field: 'user_id' },
   posted: { type: DataTypes.INTEGER, allowNull: false, defaultValue: new Date() },
-  repost: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    field: 'user_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    references: {
+      key: 'id', model: 'users'
+    }
+  },
 }, {
   sequelize: db,
   tableName: 'posts',
   underscored: true,
   timestamps: false,
 })
+
+SequelizeUser.hasMany(SequelizePost, { foreignKey: 'userId', as: 'userPost' });
+SequelizePost.belongsTo(SequelizeUser, { foreignKey: 'userId' });
+
+// Unico
+SequelizePost.belongsTo(SequelizeUser, { foreignKey: 'userId', as: 'postUser' });
 
 export default SequelizePost;
