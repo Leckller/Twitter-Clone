@@ -5,7 +5,7 @@ interface like {
   dislike(userId: number, postId: number, typePost: boolean): void,
 }
 
-export default class Like implements like {
+export default class LikeModel implements like {
   private model = SequelizeLike
 
   async like(userId: number, postId: number, typePost: boolean): Promise<void> {

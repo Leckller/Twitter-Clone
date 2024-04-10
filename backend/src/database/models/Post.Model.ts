@@ -1,16 +1,14 @@
+import SequelizePost from "./Sequelize/Post.Sequelize";
+import { Post as PostType } from '../../types/posts.types'
 
-type postFields = {
-  userId: number,
-  content: string,
-  posted?: Date,
-}
 
 interface post {
-  createPost(newPost: postFields): postFields;
+  createPost(newPost: PostType): PostType;
+  deletePost(postId): void;
 }
 
-export default class Post {
-
+export default class PostModel implements post {
+  private db = SequelizePost;
 
 
 }
