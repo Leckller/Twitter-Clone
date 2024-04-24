@@ -1,5 +1,5 @@
-import SequelizePost from "./Sequelize/Post.Sequelize";
 import { Comment as CommentType } from '../../types/comment.types'
+import SequelizeComment from "./Sequelize/Comment.Sequelize";
 
 
 interface commentMethods {
@@ -8,5 +8,5 @@ interface commentMethods {
 }
 
 export default class CommentModel implements commentMethods {
-  private db = SequelizePost;
+  private db = SequelizeComment;
 }

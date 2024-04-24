@@ -1,13 +1,13 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import db from '../index';
 
-class SequelizeLike extends Model<InferAttributes<SequelizeLike>, InferCreationAttributes<SequelizeLike>> {
+class SequelizeFollower extends Model<InferAttributes<SequelizeFollower>, InferCreationAttributes<SequelizeFollower>> {
   declare id: CreationOptional<number>;
   declare followedId: number;
   declare followingId: number;
 }
 
-SequelizeLike.init({
+SequelizeFollower.init({
   id: { type: DataTypes.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
   followedId: {
     type: DataTypes.INTEGER,
@@ -36,4 +36,4 @@ SequelizeLike.init({
   timestamps: false
 });
 
-export default SequelizeLike;
+export default SequelizeFollower;

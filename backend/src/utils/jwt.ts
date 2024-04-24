@@ -1,5 +1,3 @@
-// src/utils/jwt.util.ts
-
 import jwt from 'jsonwebtoken';
 
 const secret = process.env.JWT_SECRET || 'segredinhoRsrsrsrs';

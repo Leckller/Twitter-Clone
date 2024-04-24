@@ -17,7 +17,7 @@ SequelizeUser.init({
   tagName: { type: DataTypes.STRING(16), allowNull: false, unique: true },
   customName: { type: DataTypes.STRING(20), allowNull: false },
   password: { type: DataTypes.STRING(20), allowNull: false },
-  picture: { type: DataTypes.STRING, allowNull: false },
+  picture: { type: DataTypes.STRING, allowNull: false, defaultValue: '' },
   email: { type: DataTypes.STRING, allowNull: false },
 }, {
   sequelize: db,

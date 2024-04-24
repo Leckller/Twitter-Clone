@@ -1,37 +1,22 @@
-// import { Request, Response } from "express";
-// import services from "../services";
-// import UserModel from "../database/models/User.model";
-// import utils from '../utils';
-// import { Envs } from "../middlewares/token.Middleware";
+import { Request, Response } from "express";
+import { User } from "../types/users.types";
+import UserService from "../services/User.Service";
 
-// const createUser = async (req: Request, res: Response) => {
-//   const { email, endereco, name, password, pictureUrl } = req.body;
-//   const validateFields = await services.User.validateUserFields({
-//     email, endereco, name, password
-//   });
-//   if (validateFields) {
-//     return res.status(validateFields.status).json({ message: validateFields.data.message });
-//   }
-//   else {
-//     try {
-//       // fazer uma transaction
-//       const create = await UserModel.create({
-//         email, name,
-//         password, pictureUrl: pictureUrl ? pictureUrl : 'defaultPicture'
-//       });
-//       const token = utils.jwt.sign({ email, id: create.dataValues.id });
+export default class UserController {
+  private service = new UserService();
 
-//       return res.status(201).json({ token })
-//     } catch (err) {
-//       return res.status(500).json({ message: 'Ocorreu um erro inesperado' });
-//     }
-//   }
-// };
+  async createUser(req: Request, res: Response) {
+    const { customName, description, email, password, picture, tagName }: Omit<User, 'id'> = req.body;
+    const { data, status } = await this.service.newUser({ customName, description, email, password, picture, tagName });
+    res.status(status).json(data);
+  }
 
-// const getUser = async (req: Request & Envs, res: Response) => {
-//   const user = req.envs;
+  async loginUser(req: Request, res: Response) {
+    const { email, password } = req.body;
 
-//   res.status(200).json(user);
-// };
+    const { data, status } = await this.service.loginUser(email, password);
 
-// export default { createUser, getUser };
+    res.status(status).json(data);
+  }
+
+}

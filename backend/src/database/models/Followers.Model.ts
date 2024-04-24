@@ -1,5 +1,5 @@
-import SequelizePost from "./Sequelize/Post.Sequelize";
 import { Followers as FollowersType } from '../../types/followers.types'
+import SequelizeFollower from "./Sequelize/Followers.Sequelize";
 
 
 interface followerMethods {
@@ -8,7 +8,7 @@ interface followerMethods {
 }
 
 export default class FollowersModel implements followerMethods {
-  private db = SequelizePost;
+  private db = SequelizeFollower;
 
 
 }

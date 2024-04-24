@@ -1,7 +1,7 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import db from '../index';
 
-class SequelizeLike extends Model<InferAttributes<SequelizeLike>, InferCreationAttributes<SequelizeLike>> {
+class SequelizeComment extends Model<InferAttributes<SequelizeComment>, InferCreationAttributes<SequelizeComment>> {
   declare id: CreationOptional<number>;
   declare userId: number;
   declare postId: number;
@@ -9,7 +9,7 @@ class SequelizeLike extends Model<InferAttributes<SequelizeLike>, InferCreationA
   declare commented: Date
 }
 
-SequelizeLike.init({
+SequelizeComment.init({
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, allowNull: false },
   content: { type: DataTypes.STRING(340), allowNull: false, field: 'content' },
   commented: { type: DataTypes.DATE, allowNull: false, defaultValue: new Date(), field: 'commented' },
@@ -40,4 +40,4 @@ SequelizeLike.init({
   timestamps: false
 });
 
-export default SequelizeLike;
+export default SequelizeComment;
