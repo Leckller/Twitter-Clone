@@ -1,8 +1,26 @@
-// import { Request, Response } from "express"
-// import PostModel from "../database/models/Post.Model";
-// import UserModel from "../database/models/User.model";
-// import { Envs } from "../middlewares/token.Middleware";
-// import services from "../services";
+import { Request, Response } from "express"
+import { Envs } from "../middlewares/token.Middleware";
+import postService from "../services/Post.Service";
+import { Post } from "../types/posts.types";
+
+export default class PostController {
+  private service = new postService();
+
+  async newPost(req: Request & Envs, res: Response) {
+    const { content }: Post = req.body;
+    const { id, email } = req.envs;
+    const { status, data } = await this.service.newPost({ content }, { id, email });
+    res.status(status).json(data);
+  }
+
+  async deletePost(req: Request & Envs, res: Response) {
+    const { postId } = req.body;
+    const { id, email } = req.envs;
+    const { status, data } = await this.service.deletePost(postId, { id, email });
+    res.status(status).json(data);
+  }
+
+}
 
 // const newPost = async (req: Request & Envs, res: Response) => {
 //   const { content } = req.body;
@@ -65,10 +83,9 @@
 //   res.status(200).json(globalPosts)
 // }
 
-// // const like = async (req: Request, res: Response) => {
-// //   const { id, liked } = req.body;
+// const like = async (req: Request, res: Response) => {
+//   const { id, liked } = req.body;
 
-// //   const update = await PostModel.update({likes}, { where: { id } })
-// // }
+//   const update = await PostModel.update({likes}, { where: { id } })
+// }
 
-// export default { newPost, viewProfilePosts, viewGlobalPosts };

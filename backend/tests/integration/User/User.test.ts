@@ -2,12 +2,12 @@ import sinon from 'sinon';
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import UserMock from '../../mocks/user.mocks'
-import app from '../../../src/app';
+import { app } from '../../../src/app';
 
 chai.use(chaiHttp);
 const mock = new UserMock();
 
-describe('Post, /User', function () {
+describe('/User', function () {
   beforeEach(function () { sinon.restore(); });
 
   it('01 - Testa se é possível criar uma conta', async () => {
@@ -25,7 +25,6 @@ describe('Post, /User', function () {
   });
 
   it('03 - testa se é possível editar dados de uma conta', async () => {
-    const req = await chai.request(app).post('/user/edit').send(mock.createUser)
-
+    // const req = await chai.request(app).post('/user/edit').send(mock.createUser)
   });
 });

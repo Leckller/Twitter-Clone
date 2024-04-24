@@ -19,7 +19,7 @@ const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFun
 
   try {
     const decoded = util.jwt.verify(token);
-    const user = await new UserModel().userExists(decoded.email, decoded.id);
+    const user = await new UserModel().findUserByEmail(decoded.email);
     if (!user) {
       return res.status(401).json({ message: 'Token Inválido' });
     }
