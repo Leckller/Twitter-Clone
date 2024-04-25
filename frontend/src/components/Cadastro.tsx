@@ -1,8 +1,8 @@
-import { PopupFom } from "."
+import { Popup } from "."
 
 function Cadastro({ setPopup }: { setPopup: (p: boolean) => void }) {
   return (
-    <PopupFom>
+    <Popup>
       <div className="w-full p-5 text-2xl">
         <button className="font-medium" onClick={() => setPopup(false)}>
           x
@@ -31,7 +31,7 @@ function Cadastro({ setPopup }: { setPopup: (p: boolean) => void }) {
           Logar
         </button>
       </div>
-    </PopupFom>
+    </Popup>
   )
 }
 

@@ -1,8 +1,8 @@
-import { PopupFom } from "."
+import { Popup } from "."
 
 function Login({ setPopup }: { setPopup: (p: boolean) => void }) {
   return (
-    <PopupFom>
+    <Popup>
       <div className="w-full p-5 text-2xl">
         <button className="font-medium" onClick={() => setPopup(false)}>
           x
@@ -10,7 +10,7 @@ function Login({ setPopup }: { setPopup: (p: boolean) => void }) {
       </div>
 
       <div className="flex flex-col w-[80%] gap-5 md:text-2xl">
-        <h1 className="text-left text-3xl font-medium">Criar sua conta</h1>
+        <h1 className="text-left text-3xl font-medium">É bom ver você de volta!</h1>
         <label>
           <input
             className="border border-gray-400 w-full rounded-md p-3"
@@ -31,7 +31,7 @@ function Login({ setPopup }: { setPopup: (p: boolean) => void }) {
           Logar
         </button>
       </div>
-    </PopupFom>
+    </Popup>
   )
 }
 
