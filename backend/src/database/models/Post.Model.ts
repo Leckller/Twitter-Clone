@@ -42,7 +42,6 @@ export default class PostModel implements post {
         attributes: ['tagName', 'customName', 'picture']
       }]
     })
-
     return posts;
   }
 }

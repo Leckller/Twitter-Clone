@@ -1,4 +1,4 @@
-import { Post } from "../types/posts.types";
+import { PostUser } from "../types/posts.types";
 
 const url = 'http://localhost:8001/post'
 
@@ -7,10 +7,22 @@ export default class PostFetch {
 
   constructor(token: string) { this.token = token; }
 
-  async createPost(fields: Post): Promise<any> {
+  async globalPosts(page = 0): Promise<PostUser[]> {
+    const Request = await fetch(url + '/global/' + page, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer: ' + this.token,
+      },
+    });
+    const Response = await Request.json();
+    return Response;
+  }
+
+  async createPost(content: string): Promise<any> {
     const Request = await fetch(url + '/create', {
       method: 'POST',
-      body: JSON.stringify(fields),
+      body: JSON.stringify({ content }),
       headers: {
         'Content-Type': 'application/json',
         authorization: 'Bearer: ' + this.token,

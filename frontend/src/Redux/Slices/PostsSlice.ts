@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Post } from "../../types/posts.types";
+import { PostUser } from "../../types/posts.types";
 
 const initialState: {
-  global: Omit<Post, 'id'>[],
-  followers: Omit<Post, 'id'>[],
+  global: PostUser[],
+  followers: PostUser[],
 } = {
   followers: [],
   global: [],
@@ -13,10 +13,16 @@ const PostSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    setGlobal: (state, action: PayloadAction<Omit<Post, 'id'>[]>) => {
-      state.global = [...state.global, ...action.payload]
+    setGlobal: (state, action: PayloadAction<PostUser[]>) => {
+      if (action.payload.some(post => state.global.some(statePost => statePost.id === post.id))) {
+        return;
+      }
+      state.global = [...action.payload, ...state.global]
     },
-    setFollowers: (state, action: PayloadAction<Omit<Post, 'id'>[]>) => {
+    setFollowers: (state, action: PayloadAction<PostUser[]>) => {
+      if (action.payload.some(post => state.followers.some(statePost => statePost.id === post.id))) {
+        return;
+      }
       state.followers = [...state.followers, ...action.payload]
     },
   }

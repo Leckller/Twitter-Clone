@@ -8,7 +8,7 @@ export default class postService {
   private post = new PostModel();
 
   async newPost(fields: Partial<Post>, token: { email: string, id: number })
-    : Promise<ServiceResponse<ServiceResponseError | Omit<Post, 'id'>>> {
+    : Promise<ServiceResponse<ServiceResponseError | Omit<Post, 'id'>[]>> {
     const { content } = fields;
     const { id } = token;
 
@@ -20,7 +20,7 @@ export default class postService {
 
     const post = await this.post.createPost({ content, posted: moment().format('YYYY-MM-DD HH:mm:ss') as unknown as Date, userId: id });
 
-    return { status: 201, data: post };
+    return { status: 201, data: [post] };
   }
 
   async deletePost(postId: number, token: { email: string, id: number })
