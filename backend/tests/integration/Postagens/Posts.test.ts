@@ -13,6 +13,7 @@ describe('/Post', function () {
   it('01 - Cria um post', async () => {
     const req = await chai.request(app).post('/post/create').send('mock')
 
+    expect(req.status).to.be.eq(201);
   });
 
   it('02 - Remove o post anterior', async () => {

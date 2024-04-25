@@ -1,4 +1,4 @@
-import SequelizePost from "./Sequelize/Post.Sequelize";
+import SequelizePost from "./ModelsSequelize/Post.Sequelize";
 import { Post as PostType } from '../../types/posts.types'
 
 

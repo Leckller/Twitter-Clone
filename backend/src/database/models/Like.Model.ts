@@ -1,4 +1,4 @@
-import SequelizeLike from "./Sequelize/Like.Sequelize";
+import SequelizeLike from "./ModelsSequelize/Like.Sequelize";
 
 interface like {
   like(userId: number, postId: number, typePost: boolean): void,

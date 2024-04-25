@@ -1,8 +1,6 @@
 import { Optional } from 'sequelize';
 import { User as UserType } from '../../types/users.types'
-import SequelizeUser from "./Sequelize/User.Sequelize";
-import jwt from '../../utils/jwt'
-
+import SequelizeUser from "./ModelsSequelize/User.Sequelize";
 
 interface userMethods {
   createUser(fields: Optional<UserType, 'id'>): Promise<UserType>
@@ -33,5 +31,9 @@ export default class UserModel implements userMethods {
     const createUser = await this.db.create({ customName, description, email, password, picture, tagName });
 
     return createUser.dataValues;
+  }
+
+  async deleteUser(id: number, email: string): Promise<void> {
+    await this.db.destroy({ where: { id, email } });
   }
 }

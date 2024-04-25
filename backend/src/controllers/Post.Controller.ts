@@ -3,20 +3,21 @@ import { Envs } from "../middlewares/token.Middleware";
 import postService from "../services/Post.Service";
 import { Post } from "../types/posts.types";
 
+const service = new postService();
+
 export default class PostController {
-  private service = new postService();
 
   async newPost(req: Request & Envs, res: Response) {
     const { content }: Post = req.body;
     const { id, email } = req.envs;
-    const { status, data } = await this.service.newPost({ content }, { id, email });
+    const { status, data } = await service.newPost({ content }, { id, email });
     res.status(status).json(data);
   }
 
   async deletePost(req: Request & Envs, res: Response) {
     const { postId } = req.body;
     const { id, email } = req.envs;
-    const { status, data } = await this.service.deletePost(postId, { id, email });
+    const { status, data } = await service.deletePost(postId, { id, email });
     res.status(status).json(data);
   }
 

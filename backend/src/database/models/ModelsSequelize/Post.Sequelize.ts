@@ -1,15 +1,12 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import db from '../index';
 import SequelizeUser from "./User.Sequelize";
+import { Post } from "../../../types/posts.types";
+import { DataTypes, ModelDefined, Optional } from 'sequelize';
 
-class SequelizePost extends Model<InferAttributes<SequelizePost>, InferCreationAttributes<SequelizePost>> {
-  declare id: CreationOptional<number>;
-  declare userId: number;
-  declare content: string;
-  declare posted: Date;
-}
+export type PostWithNoId = Optional<Post, 'id'>;
+type PostSequelizeCreate = ModelDefined<Post, PostWithNoId>;
 
-SequelizePost.init({
+const SequelizePost: PostSequelizeCreate = db.define('Post', {
   id: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true },
   content: { type: DataTypes.STRING, allowNull: false },
   posted: { type: DataTypes.INTEGER, allowNull: false, defaultValue: new Date() },
@@ -24,7 +21,6 @@ SequelizePost.init({
     }
   },
 }, {
-  sequelize: db,
   tableName: 'posts',
   underscored: true,
   timestamps: false,

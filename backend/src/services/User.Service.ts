@@ -49,11 +49,20 @@ export default class UserService {
 
   async loginUser(email: string, password: string): Promise<ServiceResponse<ServiceResponseError | { token: string }>> {
     const user = await this.db.findUserByEmail(email);
-    if (!user || user.password !== password) return { status: 400, data: { message: 'Email ou Senha inválidos' } };
+    if (!user || user.password !== password) return { status: 400, data: { message: 'Email ou Senha inválidos.' } };
     const token = jwt.sign({ email: user.email, id: user.id });
 
     return { status: 200, data: { token } };
   }
+
+  async deleteUser(id: number, email: string): Promise<ServiceResponse<ServiceResponseError>> {
+    const user = await this.db.findUserByEmail(email);
+    if (!user) return { status: 400, data: { message: 'Usuário não encontrado.' } }
+    if (user.email !== email || user.id !== id) return { status: 400, data: { message: 'Você não tem permissão para isso.' } }
+    await this.db.deleteUser(id, email);
+    return { status: 200, data: { message: 'Usuário deletado.' } }
+  }
+
   async editUser(fields: string[]) {
     // para implementar no futuro
   }

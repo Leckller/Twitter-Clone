@@ -5,8 +5,8 @@ export default {
   up(queryInterface: QueryInterface) {
     return queryInterface.createTable<Model<User>>('users', {
       id: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true },
-      tagName: { type: DataTypes.STRING(16), allowNull: false, unique: true },
-      customName: { type: DataTypes.STRING(20), allowNull: false },
+      tagName: { type: DataTypes.STRING(16), allowNull: false, unique: true, field: 'tag_name' },
+      customName: { type: DataTypes.STRING(20), allowNull: false, field: 'custom_name' },
       description: { type: DataTypes.STRING(200), allowNull: true, defaultValue: 'i love ruytter!' },
       picture: { type: DataTypes.STRING, allowNull: false },
       email: { type: DataTypes.STRING, allowNull: false },
