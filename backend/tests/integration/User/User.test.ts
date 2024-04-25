@@ -9,7 +9,7 @@ import jwt from '../../../src/utils/jwt';
 chai.use(chaiHttp);
 const mock = new UserMock();
 
-describe.only('/User', function () {
+describe('/User', function () {
   beforeEach(function () {
     sinon.restore();
   });

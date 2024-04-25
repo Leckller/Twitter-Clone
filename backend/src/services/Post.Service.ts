@@ -1,3 +1,4 @@
+import moment from "moment";
 import PostModel from "../database/models/Post.Model";
 import { ServiceResponse, ServiceResponseError } from "../types/Services.types"
 import { Post } from "../types/posts.types";
@@ -16,7 +17,7 @@ export default class postService {
       return { status: 411, data: { message: 'Seu post atingiu o limite de 256 caracteres.' } }
     }
 
-    const post = await this.post.createPost({ content, posted: new Date(), userId: id });
+    const post = await this.post.createPost({ content, posted: moment().format('YYYY-MM-DD HH:mm:ss') as unknown as Date, userId: id });
 
     return { status: 201, data: post };
   }
