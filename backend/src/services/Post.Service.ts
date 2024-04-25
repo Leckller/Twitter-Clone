@@ -2,6 +2,7 @@ import moment from "moment";
 import PostModel from "../database/models/Post.Model";
 import { ServiceResponse, ServiceResponseError } from "../types/Services.types"
 import { Post } from "../types/posts.types";
+import { PostModelType } from '../database/models/ModelsSequelize/Post.Sequelize'
 
 export default class postService {
   private post = new PostModel();
@@ -30,5 +31,12 @@ export default class postService {
       return { status: 401, data: { message: 'Você não tem permissão para apagar este post.' } }
     }
     return { status: 200, data: { message: 'Post removido!' } }
+  }
+
+  async globalPosts(page: number): Promise<ServiceResponse<PostModelType[]>> {
+    if (page < 0) page = 0;
+    const posts = await this.post.getGlobalPosts(page);
+
+    return { status: 200, data: posts }
   }
 }
