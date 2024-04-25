@@ -1,6 +1,6 @@
 import Login from "./Login";
 import Cadastro from "./Cadastro";
-import PopupFom from "./PopupFom";
+import Popup from "./Popup";
 import Loading from "./Loading";
 
-export { Login, Cadastro, PopupFom, Loading }
+export { Login, Cadastro, Popup, Loading }

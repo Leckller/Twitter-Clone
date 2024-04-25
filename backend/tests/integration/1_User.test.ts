@@ -1,15 +1,13 @@
 import sinon from 'sinon';
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import UserMock from '../../mocks/user.mocks'
-import { app } from '../../../src/app';
-import jwt from '../../../src/utils/jwt';
-
+import UserMock from '../mocks/user.mocks'
+import { app } from '../../src/app';
 
 chai.use(chaiHttp);
 const mock = new UserMock();
 
-describe.only('/User', function () {
+describe('Teste 1 - Rota User', function () {
   beforeEach(function () {
     sinon.restore();
   });

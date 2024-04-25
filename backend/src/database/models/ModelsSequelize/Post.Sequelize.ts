@@ -1,9 +1,10 @@
 import db from '../index';
 import SequelizeUser from "./User.Sequelize";
 import { Post } from "../../../types/posts.types";
-import { DataTypes, ModelDefined, Optional } from 'sequelize';
+import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 
 export type PostWithNoId = Optional<Post, 'id'>;
+export type PostModelType = Model<Post, PostWithNoId>
 type PostSequelizeCreate = ModelDefined<Post, PostWithNoId>;
 
 const SequelizePost: PostSequelizeCreate = db.define('Post', {

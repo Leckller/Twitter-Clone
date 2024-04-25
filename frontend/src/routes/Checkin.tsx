@@ -5,6 +5,7 @@ function Checkin() {
   const [login, setLogin] = useState(false);
   const [cadastro, setCadastro] = useState(false);
 
+
   return (
     <main className={`
       flex flex-col h-screen relative
@@ -42,7 +43,7 @@ function Checkin() {
 
       </div>
       {login && <Login setPopup={setLogin} />}
-      {Cadastro && <Cadastro setPopup={setLogin} />}
+      {cadastro && <Cadastro setPopup={setCadastro} />}
     </main>
   )
 }

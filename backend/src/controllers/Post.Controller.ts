@@ -21,6 +21,12 @@ export default class PostController {
     res.status(status).json(data);
   }
 
+  async getGlobalPosts(req: Request, res: Response) {
+    const { page } = req.params;
+    const { status, data } = await service.globalPosts(Number(page));
+
+    res.status(status).json(data);
+  }
 }
 
 // const newPost = async (req: Request & Envs, res: Response) => {
