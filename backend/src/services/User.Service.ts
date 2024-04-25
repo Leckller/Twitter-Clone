@@ -25,7 +25,7 @@ export default class UserService {
     return { valid: true }
   }
 
-  async newUser(body: Omit<User, 'id'>): Promise<ServiceResponse<ServiceResponseError | { token: string }>> {
+  async newUser(body: Omit<User, 'id'>): Promise<ServiceResponse<ServiceResponseError | { token: string, user: User }>> {
     const { email, tagName, customName, password, description, picture }: Omit<User, 'id'> = body;
     if (!tagName || !email || !customName || !password) {
       return {
@@ -44,15 +44,15 @@ export default class UserService {
     }
     const user = await this.db.createUser({ customName, description, email, password, picture, tagName });
     const token = jwt.sign({ email: user.email, id: user.id });
-    return { status: 201, data: { token } }
+    return { status: 201, data: { token, user } }
   }
 
-  async loginUser(email: string, password: string): Promise<ServiceResponse<ServiceResponseError | { token: string }>> {
+  async loginUser(email: string, password: string): Promise<ServiceResponse<ServiceResponseError | { token: string, user: User }>> {
     const user = await this.db.findUserByEmail(email);
     if (!user || user.password !== password) return { status: 400, data: { message: 'Email ou Senha inválidos.' } };
     const token = jwt.sign({ email: user.email, id: user.id });
 
-    return { status: 200, data: { token } };
+    return { status: 200, data: { token, user } };
   }
 
   async deleteUser(id: number, email: string): Promise<ServiceResponse<ServiceResponseError>> {

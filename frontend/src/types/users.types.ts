@@ -9,3 +9,5 @@ export type User = {
 }
 
 export type UserFields = 'customName' | 'tagName' | 'picture' | 'password' | 'email' | 'description'
+
+export type UserResponse = { token: string, user: User };

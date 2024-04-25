@@ -1,5 +1,6 @@
 import express from "express";
 import router from "./routes";
+import cors from 'cors';
 require('express-async-errors');
 
 export default class App {
@@ -7,6 +8,7 @@ export default class App {
 
   constructor() {
     this.app.use(express.json());
+    this.app.use(cors({ origin: '*' }))
 
     // index router
     this.app.use(router);
