@@ -1,21 +1,39 @@
-import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
-import db from './index';
-import { User } from '../../types/users.types';
+import { Optional } from 'sequelize';
+import { User as UserType } from '../../types/users.types'
+import SequelizeUser from "./ModelsSequelize/User.Sequelize";
 
-export type UserWithNoId = Optional<User, 'id'>;
-export type UserSequelizeModel = Model<User, UserWithNoId>;
+interface userMethods {
+  createUser(fields: Optional<UserType, 'id'>): Promise<UserType>
+  findUserByEmail(email: string): Promise<UserType | undefined>
+  findUserByTag(tagName: string): Promise<UserType | undefined>
+}
 
-type UserSequelizeModelCreate = ModelDefined<User, UserWithNoId>;
+type ErrorM = { message: string };
 
-const UserModel: UserSequelizeModelCreate = db.define('user', {
-  name: { type: DataTypes.STRING, allowNull: false },
-  email: { type: DataTypes.STRING, allowNull: false },
-  endereco: { type: DataTypes.STRING, allowNull: false },
-  password: { type: DataTypes.STRING, allowNull: false },
-  pictureUrl: { type: DataTypes.STRING, allowNull: true, defaultValue: 'defaultPicture' },
-}, {
-  tableName: 'users',
-  timestamps: false,
-});
+export default class UserModel implements userMethods {
+  private db = SequelizeUser;
 
-export default UserModel;
+  async findUserByEmail(email: string): Promise<UserType | undefined> {
+    const dbData = await this.db.findOne({ where: { email } });
+    if (!dbData) return undefined;
+    return dbData.dataValues;
+  }
+
+  async findUserByTag(tagName: string): Promise<UserType | undefined> {
+    const dbData = await this.db.findOne({ where: { tagName } });
+    if (!dbData) return undefined;
+    return dbData.dataValues;
+  }
+
+  async createUser(fields: Optional<UserType, 'id'>): Promise<UserType> {
+    const { customName, description, email, password, picture, tagName } = fields;
+
+    const createUser = await this.db.create({ customName, description, email, password, picture, tagName });
+
+    return createUser.dataValues;
+  }
+
+  async deleteUser(id: number, email: string): Promise<void> {
+    await this.db.destroy({ where: { id, email } });
+  }
+}

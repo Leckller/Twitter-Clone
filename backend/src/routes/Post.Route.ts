@@ -1,10 +1,14 @@
 import express, { Application } from 'express';
-import controllers from '../controllers';
+import PostController from '../controllers/Post.Controller';
 
 const route = express.Router();
+const controller = new PostController();
 
-route.post('/', controllers.Post.newPost as Application)
-route.get('/profile/:endereco/:page', controllers.Post.viewProfilePosts)
-route.get('/global/:page', controllers.Post.viewGlobalPosts)
+route.post('/create', (req, res) => {
+  controller.newPost(req as any, res);
+})
+route.post('/delete', (req, res) => {
+  controller.deletePost(req as any, res)
+})
 
 export default route;

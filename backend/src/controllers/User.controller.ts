@@ -1,37 +1,29 @@
 import { Request, Response } from "express";
-import services from "../services";
-import UserModel from "../database/models/User.model";
-import utils from '../utils';
+import { User } from "../types/users.types";
+import UserService from "../services/User.Service";
 import { Envs } from "../middlewares/token.Middleware";
 
-const createUser = async (req: Request, res: Response) => {
-  const { email, endereco, name, password, pictureUrl } = req.body;
-  const validateFields = await services.User.validateUserFields({
-    email, endereco, name, password
-  });
-  if (validateFields) {
-    return res.status(validateFields.status).json({ message: validateFields.data.message });
+const service = new UserService();
+
+export default class UserController {
+
+  async createUser(req: Request, res: Response) {
+    const { customName, description, email, password, picture, tagName }: Omit<User, 'id'> = req.body;
+    const { data, status } = await service.newUser({ customName, description, email, password, picture, tagName });
+    res.status(status).json(data);
   }
-  else {
-    try {
-      // fazer uma transaction
-      const create = await UserModel.create({
-        email, endereco, name,
-        password, pictureUrl: pictureUrl ? pictureUrl : 'defaultPicture'
-      });
-      const token = utils.jwt.sign({ email, id: create.dataValues.id });
 
-      return res.status(201).json({ token })
-    } catch (err) {
-      return res.status(500).json({ message: 'Ocorreu um erro inesperado' });
-    }
+  async loginUser(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    const { data, status } = await service.loginUser(email, password);
+
+    res.status(status).json(data);
   }
-};
 
-const getUser = async (req: Request & Envs, res: Response) => {
-  const user = req.envs;
-
-  res.status(200).json(user);
-};
-
-export default { createUser, getUser };
+  async deleteUser(req: Request & Envs, res: Response) {
+    const { id, email } = req.envs;
+    const { data, status } = await service.deleteUser(id, email);
+    res.status(status).json(data);
+  }
+}

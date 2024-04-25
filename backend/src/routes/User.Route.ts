@@ -1,13 +1,17 @@
-import express, { Application } from 'express';
-import controllers from '../controllers';
-import midds from '../middlewares';
+import express from 'express';
+import UserController from '../controllers/User.controller';
+import tokenMiddleware from '../middlewares/token.Middleware';
 
 const route = express.Router();
 
-// Foi utilizado o type Aplication devido o uso do req.envs para passar informação do middleware para o proximo
-route.get('/', midds.token as Application, controllers.User.getUser as Application);
+const userController = new UserController();
 
-route.post('/', controllers.User.createUser);
+route.post('/create', userController.createUser);
 
+route.post('/login', userController.loginUser);
+
+route.delete('/delete', tokenMiddleware as any, (req, res) => {
+  userController.deleteUser(req as any, res)
+});
 
 export default route;

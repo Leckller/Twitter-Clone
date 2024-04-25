@@ -1,34 +1,28 @@
-import { DataTypes, Model, ModelDefined, Optional } from "sequelize"
-import { Post } from "../../types/posts.types"
-import db from './index';
-import UserModel from "./User.model";
+import SequelizePost from "./ModelsSequelize/Post.Sequelize";
+import { Post as PostType } from '../../types/posts.types'
 
-export type PostWithNoId = Optional<Post, 'id'>;
-export type PostSequelizeModel = Model<Post, PostWithNoId>;
 
-type PostSequelizeModelCreate = ModelDefined<Post, PostWithNoId>;
+interface post {
+  createPost(newPost: PostType): Promise<Omit<PostType, 'id'>>;
+  deletePost(postId: number): Promise<void>;
+}
 
-const PostModel: PostSequelizeModelCreate = db.define('post', {
-  id: { type: DataTypes.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
-  likes: { type: DataTypes.INTEGER, allowNull: false },
-  posted: { type: DataTypes.DATE, allowNull: false },
-  content: { type: DataTypes.TEXT, allowNull: false },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    field: 'user_id',
-    references: { key: 'id', model: 'users' }
-  },
-}, {
-  tableName: 'posts',
-  timestamps: false
-});
+export default class PostModel implements post {
+  private db = SequelizePost;
 
-// Muitos
-UserModel.hasMany(PostModel, { foreignKey: 'userId', as: 'userPost' });
-PostModel.belongsTo(UserModel, { foreignKey: 'userId' });
+  async createPost(newPost: Omit<PostType, 'id'>): Promise<PostType> {
+    const { content, posted, userId } = newPost;
+    const post = await this.db.create({ content, posted, userId });
+    return post.dataValues;
+  }
 
-// Unico
-PostModel.belongsTo(UserModel, { foreignKey: 'userId', as: 'postUser' });
+  async findPostById(postId: number): Promise<PostType | undefined> {
+    const post = await this.db.findOne({ where: { id: postId } });
+    if (!post) return undefined;
+    return post.dataValues;
+  }
 
-export default PostModel;
+  async deletePost(postId: number): Promise<void> {
+    await this.db.destroy({ where: { id: postId } });
+  }
+}

@@ -5,7 +5,7 @@ import UserModel from "../database/models/User.model";
 const extractToken = (token: string) => token.split(' ')[1];
 
 export type Envs = {
-  envs: { id: number, email: string, endereco: string, name: string, pictureUrl: string }
+  envs: { email: string, tagName: string, customName: string, id: number, description: string, picture: string }
 }
 
 const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFunction) => {
@@ -19,14 +19,14 @@ const tokenMiddleware = async (req: Request & Envs, res: Response, next: NextFun
 
   try {
     const decoded = util.jwt.verify(token);
-    const user = await UserModel.findOne({ where: { email: decoded.email, id: decoded.id } });
+    const user = await new UserModel().findUserByEmail(decoded.email);
     if (!user) {
       return res.status(401).json({ message: 'Token Inválido' });
     }
 
-    const { email, endereco, name, id, pictureUrl } = user.dataValues;
+    const { email, tagName, customName, id, description, picture } = user;
 
-    req.envs = { email, endereco, name, id, pictureUrl };
+    req.envs = { email, tagName, customName, id, description, picture };
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Token Inválido' });
