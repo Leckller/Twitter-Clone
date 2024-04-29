@@ -1,3 +1,4 @@
+import { UserModelType } from "../database/models/ModelsSequelize/User.Sequelize";
 import UserModel from "../database/models/User.model";
 import { ServiceResponse, ServiceResponseError } from "../types/Services.types";
 import { User } from "../types/users.types";

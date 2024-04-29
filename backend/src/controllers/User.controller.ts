@@ -26,4 +26,5 @@ export default class UserController {
     const { data, status } = await service.deleteUser(id, email);
     res.status(status).json(data);
   }
+
 }

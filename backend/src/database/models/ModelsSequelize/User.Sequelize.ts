@@ -1,8 +1,9 @@
-import { DataTypes, ModelDefined, Optional } from 'sequelize';
+import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 import db from '../index';
 import { User } from '../../../types/users.types';
 
 export type UserWithNoId = Optional<User, 'id'>;
+export type UserModelType = Model<User, UserWithNoId>;
 type UserSequelizeCreate = ModelDefined<User, UserWithNoId>;
 
 const SequelizeUser: UserSequelizeCreate = db.define('User', {
@@ -16,6 +17,6 @@ const SequelizeUser: UserSequelizeCreate = db.define('User', {
 }, {
   tableName: 'users',
   timestamps: false,
-})
+});
 
 export default SequelizeUser;

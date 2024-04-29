@@ -27,7 +27,7 @@ function Home() {
       <Header />
       <main className="h-full w-full overflow-y-auto">
         {posts.global.length > 0 && posts.global.map((post) => (
-          <Post data={post} key={post.id} />
+          <Post data={post} user={post} key={post.id} />
         ))}
       </main>
       {!popup && (

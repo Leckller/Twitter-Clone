@@ -1,10 +1,27 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Cadastro, Login } from "../components";
+import { useAppDispatch } from "../hooks/ReduxHooks";
+import { useNavigate } from "react-router-dom";
+import { tokenAction, userAction } from "../Redux/Slices";
+import { User } from "../types/users.types";
 
 function Checkin() {
   const [login, setLogin] = useState(false);
   const [cadastro, setCadastro] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    const localLogin: { user: Omit<User, 'id'>, token: string } = JSON.parse(localStorage.getItem('login') as string);
+    if (!localLogin) {
+      return;
+    }
+    if (localLogin.token.length > 25) {
+      dispatch(userAction.setUser(localLogin.user));
+      dispatch(tokenAction.setToken(localLogin.token));
+      return navigate('/home');
+    }
+  }, [])
 
   return (
     <main className={`

@@ -1,6 +1,8 @@
 import SequelizePost, { PostModelType } from "./ModelsSequelize/Post.Sequelize";
 import { Post as PostType } from '../../types/posts.types'
-import UserModelSequelize from './ModelsSequelize/User.Sequelize'
+import UserModelSequelize, { UserModelType } from './ModelsSequelize/User.Sequelize'
+import PostModelSequelize from './ModelsSequelize/Post.Sequelize'
+import SequelizeUser from "./ModelsSequelize/User.Sequelize";
 
 interface post {
   createPost(newPost: PostType): Promise<Omit<PostType, 'id'>>;
@@ -9,6 +11,7 @@ interface post {
 
 export default class PostModel implements post {
   private db = SequelizePost;
+  private userDB = SequelizeUser;
 
   async createPost(newPost: Omit<PostType, 'id'>): Promise<PostType> {
     const { content, posted, userId } = newPost;
@@ -24,6 +27,20 @@ export default class PostModel implements post {
 
   async deletePost(postId: number): Promise<void> {
     await this.db.destroy({ where: { id: postId } });
+  }
+
+  async getPostsByUserId(userId: number, limit: number = 20): Promise<UserModelType[]> {
+    const posts = await this.userDB.findAll({
+      where: { id: userId },
+      include: [{
+        order: [['posted', 'DESC']],
+        limit,
+        model: PostModelSequelize,
+        as: 'userPost',
+      }]
+    })
+
+    return posts;
   }
 
   async getGlobalPosts(page: number): Promise<PostModelType[]> {

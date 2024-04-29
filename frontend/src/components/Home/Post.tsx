@@ -1,32 +1,33 @@
 
-import { useAppSelector } from "../../hooks/ReduxHooks";
-import { PostUser } from "../../types/posts.types";
+import { Link } from "react-router-dom";
+import { Post as PostType, PostUser } from "../../types/posts.types";
 
 const iconDefault = 'https://img.icons8.com/pastel-glyph/64/gender-neutral-user.png'
 
-function Post({ data }: { data: PostUser }) {
-  const { user } = useAppSelector(state => state);
+function Post({ data, user: { postUser } }: { data: PostType, user: PostUser }) {
   return (
     <article
       className="flex flex-row border-b border-gray-700
        max-h-[350px] pr-3 pl-3 pb-3 pt-2 text-white gap-2
     ">
-      <img
-        className="w-[40px], h-[40px] rounded-full border border-black"
-        src={user.picture.length < 10 ? iconDefault : user.picture} alt="Profile"
-      />
+      <Link to={`/user/${data.userId}`} className="min-w-[40px]">
+        <img
+          className="w-[40px], h-[40px] rounded-full border border-black"
+          src={postUser.picture.length < 10 ? iconDefault : postUser.picture} alt="Profile"
+        />
+      </Link>
 
       <div className="flex flex-col">
         <div className="flex flex-row gap-3 -translate-y-2 items-center">
-          <h2 className="text-lg font-bold">{data.postUser.customName}</h2>
-          <h3 className="text-xs">@{data.postUser.tagName}</h3>
+          <h2 className="text-lg font-bold">{postUser.customName}</h2>
+          <h3 className="text-xs text-gray-400">@{postUser.tagName}</h3>
         </div>
         <p className="max-h-[400px] break-all">
           {data.content}
         </p>
       </div>
 
-    </article>
+    </article >
   )
 }
 
