@@ -22,17 +22,29 @@ function User() {
 
   return (
     <div className="bg-gray-900 h-screen overflow-hidden">
-      <header className="h-[225px] border-b border-gray-700">
-        <div className="w-full h-[100px] bg-blue-800"></div>
-        {/* <img src="" alt="banner" /> */}
-        <div className="h-[1250px] p-2 text-white border-t-2 border-black">
+      <header className="border-b border-gray-700 max-h-[250px]">
+        <div className="w-full h-[100px] bg-gradient-to-r from-blue-800 to-gray-900"></div>{/* <img src="" alt="banner" /> */}
+
+        <div className="p-2 text-white border-t-2 border-black">
+
           <div className="flex flex-row justify-between">
             <img src={profile.picture.length < 10 ? iconDefault : profile.picture} alt="icon"
               className="w-[60px], h-[60px] rounded-full border-2 border-black -translate-y-10 bg-gradient-to-b from-blue-800 to-gray-900"
             />
             {user.tagName === profile.tagName && <button className="h-8 pl-2 pr-2 text-sm text-center rounded-2xl border border-white">Editar Perfil</button>}
           </div>
-          <h2>{profile.customName}</h2>
+
+          <section className="-translate-y-10 pl-3">
+            <h2 className="text-2xl">{profile.customName}</h2>
+            <h3 className="text-gray-400">@{profile.tagName}</h3>
+
+            <p>{profile.description}</p>
+
+            <div className="flex flex-row gap-5">
+              <h4>0 Seguidores</h4>
+              <h4>0 Seguindo</h4>
+            </div>
+          </section>
         </div>
       </header>
 
