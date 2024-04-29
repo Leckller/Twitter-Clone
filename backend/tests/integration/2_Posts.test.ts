@@ -40,6 +40,16 @@ describe('Teste 2 - Post', function () {
     expect(req.status).to.be.eq(200);
   });
 
+  it.only('03 - testa se é possível receber os posts de um usuario', async () => {
+    const reqLogin = await chai.request(app).post('/user/login').send({ password, email });
+
+    const req = await chai.request(app).get('/post/1/0').set({
+      authorization: "Bearer: " + reqLogin.body.token
+    });
+
+    console.log(req.body);
+  });
+
   // it('03 - Erro', async () => {
   //   const req = await chai.request(app).delete('/post/delete').send('mock')
 

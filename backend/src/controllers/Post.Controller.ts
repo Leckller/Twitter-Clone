@@ -27,6 +27,14 @@ export default class PostController {
 
     res.status(status).json(data);
   }
+
+  async getProfile(req: Request & Envs, res: Response) {
+    const { userId, limit } = req.params;
+
+    const { data, status } = await service.getProfile(Number(userId), Number(limit));
+
+    res.status(status).json(data);
+  }
 }
 
 // const newPost = async (req: Request & Envs, res: Response) => {

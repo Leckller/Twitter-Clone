@@ -3,6 +3,7 @@ import PostModel from "../database/models/Post.Model";
 import { ServiceResponse, ServiceResponseError } from "../types/Services.types"
 import { Post } from "../types/posts.types";
 import { PostModelType } from '../database/models/ModelsSequelize/Post.Sequelize'
+import { UserModelType } from "../database/models/ModelsSequelize/User.Sequelize";
 
 export default class postService {
   private post = new PostModel();
@@ -38,5 +39,16 @@ export default class postService {
     const posts = await this.post.getGlobalPosts(page);
 
     return { status: 200, data: posts }
+  }
+
+  async getProfile(userId: number, limit: number)
+    : Promise<ServiceResponse<ServiceResponseError | UserModelType[]>> {
+    try {
+      const userPosts = await this.post.getPostsByUserId(userId, limit);
+      if (limit < 20) limit = 20;
+      return { status: 200, data: userPosts };
+    } catch {
+      return { status: 500, data: { message: 'Usuário não encontrado.' } };
+    }
   }
 }

@@ -12,6 +12,10 @@ route.post('/create', tokenMiddleware as any, (req, res) => {
 })
 route.delete('/delete', tokenMiddleware as any, (req, res) => {
   controller.deletePost(req as any, res)
-})
+});
+
+route.get('/:userId/:limit', tokenMiddleware as any, (req, res) => {
+  controller.getProfile(req as any, res)
+});
 
 export default route;

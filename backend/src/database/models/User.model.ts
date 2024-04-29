@@ -1,6 +1,8 @@
 import { Optional } from 'sequelize';
 import { User as UserType } from '../../types/users.types'
-import SequelizeUser from "./ModelsSequelize/User.Sequelize";
+import SequelizeUser, { UserModelType } from "./ModelsSequelize/User.Sequelize";
+import { PostModelType } from './ModelsSequelize/Post.Sequelize';
+import PostModelSequelize from './ModelsSequelize/Comment.Sequelize';
 
 interface userMethods {
   createUser(fields: Optional<UserType, 'id'>): Promise<UserType>

@@ -35,8 +35,4 @@ describe('Teste 1 - Rota User', function () {
     expect(reqDelete.status).to.be.eq(200);
     expect(reqDelete.body).to.deep.eq({ message: 'Usuário deletado.' })
   });
-
-  it('03 - testa se é possível deletar uma conta', async () => {
-    // const req = await chai.request(app).delete('/user/delete').send();
-  });
 });
