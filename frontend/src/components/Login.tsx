@@ -40,8 +40,13 @@ function Login({ setPopup }: { setPopup: (p: boolean) => void }) {
         <button
           onClick={() => {
             request.loginUser(user.email, user.password).then((resp: UserResponse) => {
+              if ('message' in resp) {
+                alert('Email ou Senha inválidos');
+                return
+              }
               dispatch(userAction.setUser(resp.user));
               dispatch(tokenAction.setToken(resp.token));
+              localStorage.setItem('login', JSON.stringify({ user: resp.user, token: resp.token }))
               navigate('/home');
             });
           }}
