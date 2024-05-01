@@ -1,13 +1,12 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
+import { DataTypes, Model, ModelDefined, Optional } from "sequelize";
 import db from '../index';
+import { Followers } from "../../../types/followers.types";
 
-class SequelizeFollower extends Model<InferAttributes<SequelizeFollower>, InferCreationAttributes<SequelizeFollower>> {
-  declare id: CreationOptional<number>;
-  declare followedId: number;
-  declare followingId: number;
-}
+export type FollowerWithNoId = Optional<Followers, 'id'>;
+export type FollowerModelType = Model<Followers, FollowerWithNoId>;
+type FollowerSequelizeCreate = ModelDefined<Followers, FollowerWithNoId>;
 
-SequelizeFollower.init({
+const SequelizeFollower: FollowerSequelizeCreate = db.define('Follower', {
   id: { type: DataTypes.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true },
   followedId: {
     type: DataTypes.INTEGER,
@@ -28,10 +27,8 @@ SequelizeFollower.init({
     references: {
       key: 'id', model: 'users'
     }
-  },
+  }
 }, {
-  sequelize: db,
-  underscored: true,
   tableName: 'followers',
   timestamps: false
 });
