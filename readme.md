@@ -1,5 +1,7 @@
 Clone do Twitter - X
 
+----- BACKEND -----
+
 POST host/user/create -> espera receber um objeto do seguinte tipo: {
   customName: string,
   tagName: string,
